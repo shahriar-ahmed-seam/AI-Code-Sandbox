@@ -40,3 +40,6 @@ Thumbs.db
 # local tooling
 _acs_*
 staged.txt
+
+# excluded
+.kiro/
