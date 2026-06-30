@@ -1,0 +1,13 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AI-Code-Sandbox logo">
+  <defs>
+    <linearGradient id="g" x1="6" y1="6" x2="42" y2="42" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#818cf8"/>
+      <stop offset="1" stop-color="#4f46e5"/>
+    </linearGradient>
+  </defs>
+  <rect x="3.5" y="3.5" width="41" height="41" rx="11" fill="#0f1422" stroke="url(#g)" stroke-width="1.5"/>
+  <!-- Shield = isolation/security -->
+  <path d="M24 11l9 3.4v7.1c0 6.1-3.9 10.6-9 12.5-5.1-1.9-9-6.4-9-12.5v-7.1L24 11z" fill="url(#g)" fill-opacity="0.16" stroke="url(#g)" stroke-width="1.6" stroke-linejoin="round"/>
+  <!-- Code glyph inside -->
+  <path d="M21.5 21.5l-2.5 2.6 2.5 2.6M26.5 21.5l2.5 2.6-2.5 2.6" stroke="#818cf8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

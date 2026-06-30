@@ -1,0 +1,67 @@
+services:
+  lang-python:
+    build: ./sandbox-images/python
+    image: ai-sandbox-python:latest
+    command: ["true"]
+    restart: "no"
+  lang-node:
+    build: ./sandbox-images/node
+    image: ai-sandbox-node:latest
+    command: ["true"]
+    restart: "no"
+  lang-go:
+    build: ./sandbox-images/go
+    image: ai-sandbox-go:latest
+    command: ["true"]
+    restart: "no"
+
+  sandbox:
+    build: ./sandbox
+    environment:
+      LISTEN_ADDR: ":8090"
+      MAX_MEMORY_MB: "512"
+      MAX_CPUS: "1.5"
+      MAX_PIDS: "128"
+      MAX_CONCURRENCY: "8"
+      DEFAULT_TIMEOUT_MS: "8000"
+      MAX_TIMEOUT_MS: "20000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - internal
+    depends_on:
+      lang-python:
+        condition: service_completed_successfully
+      lang-node:
+        condition: service_completed_successfully
+      lang-go:
+        condition: service_completed_successfully
+
+  orchestrator:
+    build: ./orchestrator
+    environment:
+      SANDBOX_URL: "http://sandbox:8090"
+      API_KEY: "${API_KEY:-}"
+      ALLOWED_ORIGINS: "${ALLOWED_ORIGINS:-*}"
+      PORT: "8000"
+    ports:
+      - "8000:8000"
+    networks:
+      - internal
+    depends_on:
+      - sandbox
+
+  web:
+    build:
+      context: ./web
+      args:
+        NEXT_PUBLIC_API_BASE_URL: "${NEXT_PUBLIC_API_BASE_URL:-http://localhost:8000}"
+        NEXT_PUBLIC_API_KEY: "${NEXT_PUBLIC_API_KEY:-}"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - orchestrator
+
+networks:
+  internal:
+    driver: bridge
